@@ -1,49 +1,112 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from "#src/components/astro/BaseHead.astro";
+import Header from "#src/components/astro/Header.astro";
+import Footer from "#src/components/astro/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "#src/consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "#src/components/astro/FormattedDate.astro";
+import MouseFollower from "#src/components/astro/MouseFollower.astro";
+import MarqueeBackground from "#src/components/astro/MarqueeBackground.astro";
+import HeroBanner from "#src/components/vue/HeroBanner.vue";
+
+const posts = (await getCollection("blog"))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
-<html lang="zh">
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			/* 全局布局调整：实现 Sticky Footer 和垂直居中 */
+			:global(body) {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+			}
+
+			main {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				flex: 1; /* 占据剩余空间 */
+				display: flex;
+				flex-direction: column;
+				justify-content: center; /* 内容垂直居中 */
+			}
+
+			/* 首页特有样式 */
+			.hero {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
+				position: relative;
+				z-index: 1;
+			}
+
+			/* 注意：主要的 Banner 样式现在都在 HeroBanner.vue 里了 */
+
+			/* 调整 H1 样式以适配 Vue 组件插槽 */
+			.hero h1 {
+				font-size: 5rem;
+				font-weight: 900;
+				line-height: 1;
+				margin: 0;
+				color: var(--text-left);
+				text-shadow: none;
+				letter-spacing: -2px;
+				white-space: nowrap;
+			}
+
+			.text-gradient {
+				/* 名字部分设计：背景色使用主题文本色，文字使用主题背景色 */
+				color: var(--bg-left);
+				background: var(--text-left);
+				padding: 0 15px;
+				margin-left: 10px;
+				-webkit-text-fill-color: initial;
+				text-shadow: none;
+				position: relative;
+				display: inline-block;
+				transform: skew(-10deg);
+				box-shadow: 4px 4px 0 var(--color-primary);
+			}
+
+			.hero p {
+				font-size: 1.5rem;
+				max-width: 600px;
+				color: var(--color-text-muted);
+				margin-top: 1rem;
+			}
+
+			@media (max-width: 720px) {
+				.hero h1 {
+					font-size: 2.5rem;
+					white-space: normal; /* 移动端允许换行 */
+					text-align: center;
+				}
+				.hero p {
+					font-size: 1.2rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
+
+		<MarqueeBackground />
+		<MouseFollower defaultSize={48} hoverSize={80} />
+
 		<main>
-			<h1> Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<HeroBanner client:load>
+					<h1>你好，我是 <span class="text-gradient">Hoe</span></h1>
+				</HeroBanner>
+			</section>
 		</main>
+
 		<Footer />
 	</body>
 </html>

@@ -1,10 +1,12 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
-import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/blog-placeholder-1.jpg';
-import { SITE_TITLE } from '../consts';
+import "../../styles/global.css";
+import type { ImageMetadata } from "astro";
+import FallbackImage from "../../assets/blog-placeholder-1.jpg";
+import { SITE_TITLE } from "../../consts";
+
+import { themes } from '#src/data/themes';
 
 interface Props {
 	title: string;
@@ -26,13 +28,25 @@ const { title, description, image = FallbackImage } = Astro.props;
 	rel="alternate"
 	type="application/rss+xml"
 	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
+	href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<link
+	rel="preload"
+	href="/fonts/atkinson-regular.woff"
+	as="font"
+	type="font/woff"
+	crossorigin
+/>
+<link
+	rel="preload"
+	href="/fonts/atkinson-bold.woff"
+	as="font"
+	type="font/woff"
+	crossorigin
+/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -41,6 +55,30 @@ const { title, description, image = FallbackImage } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+
+<!-- Theme Initialization -->
+<script is:inline define:vars={{ themes }}>
+	(function () {
+		const saved = localStorage.getItem("hero-theme");
+		const theme = themes.find((t) => t.id === saved) || themes[0];
+
+		if (theme) {
+			const root = document.documentElement;
+			// 应用 global 变量
+			if (theme.global) {
+				for (const [key, value] of Object.entries(theme.global)) {
+					root.style.setProperty(key, value);
+				}
+			}
+			// 应用 banner 变量 (确保非 banner 页面也能拿到基础色)
+			if (theme.colors) {
+				for (const [key, value] of Object.entries(theme.colors)) {
+					root.style.setProperty(key, value);
+				}
+			}
+		}
+	})();
+</script>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />

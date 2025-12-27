@@ -1,0 +1,119 @@
+---
+interface Props {
+  defaultSize?: number; // 默认大小，单位 px
+  hoverSize?: number;   // 悬停大小，单位 px
+  hideDefaultCursor?: boolean; // 是否隐藏原生光标
+}
+
+const { 
+  defaultSize = 20, 
+  hoverSize = 80, 
+  hideDefaultCursor = true 
+} = Astro.props;
+---
+
+<div id="cursor-follower"></div>
+
+<style define:vars={{ defaultSize: `${defaultSize}px`, hoverSize: `${hoverSize}px` }}>
+  #cursor-follower {
+    position: fixed;
+    width: var(--defaultSize);
+    height: var(--defaultSize);
+    background-color: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      opacity 0.2s ease;
+    opacity: 0; /* 初始隐藏 */
+  }
+
+  /* 当 JS 添加 class 时改变大小 */
+  #cursor-follower.is-hovering {
+    width: var(--hoverSize);
+    height: var(--hoverSize);
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  /* 只有当 body 被 hover 时（即鼠标在窗口内）才显示，配合 JS 使用 */
+  :global(body:hover) #cursor-follower {
+    opacity: 1;
+  }
+
+  /* 移动端不显示 */
+  @media (max-width: 720px) {
+    #cursor-follower {
+      display: none;
+    }
+  }
+</style>
+
+<!-- 全局样式：根据参数决定是否隐藏默认光标 -->
+{hideDefaultCursor && (
+  <style is:global>
+    @media (min-width: 721px) {
+      body,
+      a,
+      button,
+      .post-card,
+      .btn,
+      input,
+      textarea {
+        cursor: none !important;
+      }
+    }
+  </style>
+)}
+
+<script>
+  const cursor = document.getElementById("cursor-follower");
+  // 自动查找所有常见的可交互元素
+  const interactiveSelectors = "a, button, .post-card, .btn, input, textarea";
+
+  let mouseX = -100;
+  let mouseY = -100;
+  let cursorX = -100;
+  let cursorY = -100;
+  const speed = 0.2;
+
+  // 1. 鼠标移动追踪
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // 2. 动画循环
+  function animate() {
+    cursorX += (mouseX - cursorX) * speed;
+    cursorY += (mouseY - cursorY) * speed;
+
+    if (cursor) {
+      cursor.style.left = `${cursorX}px`;
+      cursor.style.top = `${cursorY}px`;
+    }
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // 3. 交互悬停逻辑
+  // 使用事件委托，性能更好且支持动态添加的元素
+  document.body.addEventListener("mouseover", (e) => {
+    const target = e.target as HTMLElement;
+    // 检查目标元素或其父级是否是交互元素
+    if (target.closest(interactiveSelectors)) {
+      cursor?.classList.add("is-hovering");
+    }
+  });
+
+  document.body.addEventListener("mouseout", (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest(interactiveSelectors)) {
+      cursor?.classList.remove("is-hovering");
+    }
+  });
+</script>

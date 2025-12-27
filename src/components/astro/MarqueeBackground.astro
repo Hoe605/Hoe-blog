@@ -1,0 +1,116 @@
+---
+// 这里可以扩展 Props 来接受自定义文字，目前先保持硬编码
+---
+
+<div class="marquee-container">
+    <!-- 滚动彩带背景：多层 -->
+    <div class="marquee-wrapper marquee-1">
+        <div class="marquee-inner">
+            <div class="marquee-content">
+                DESIGN — CODE — LIFE — DESIGN — CODE — LIFE — DESIGN — CODE — LIFE —&nbsp;
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                DESIGN — CODE — LIFE — DESIGN — CODE — LIFE — DESIGN — CODE — LIFE —&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper marquee-2">
+        <div class="marquee-inner">
+            <div class="marquee-content">
+                HOE BLOG — CREATIVE — HOE BLOG — CREATIVE — HOE BLOG — CREATIVE —&nbsp;
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                HOE BLOG — CREATIVE — HOE BLOG — CREATIVE — HOE BLOG — CREATIVE —&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper marquee-3">
+        <div class="marquee-inner">
+            <div class="marquee-content">
+                ASTRO — DEVELOPER — ASTRO — DEVELOPER — ASTRO — DEVELOPER —&nbsp;
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                ASTRO — DEVELOPER — ASTRO — DEVELOPER — ASTRO — DEVELOPER —&nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* --- 滚动彩带 (Marquee) --- */
+    .marquee-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .marquee-wrapper {
+        position: absolute;
+        left: 50%;
+        width: 200vw; /* 足够宽以覆盖旋转后的屏幕 */
+        overflow: hidden;
+        user-select: none;
+        display: flex;
+    }
+
+    .marquee-1 {
+        top: 15%;
+        transform: translate(-50%, -50%) rotate(-5deg);
+        opacity: 0.03;
+    }
+    
+    .marquee-2 {
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(10deg);
+        opacity: 0.05;
+    }
+
+    .marquee-3 {
+        top: 85%;
+        transform: translate(-50%, -50%) rotate(-8deg);
+        opacity: 0.04;
+    }
+
+    .marquee-content {
+        display: inline-block;
+        white-space: nowrap;
+        font-weight: 900;
+        font-family: 'Atkinson', sans-serif;
+        color: var(--color-primary);
+        text-transform: uppercase;
+    }
+
+    .marquee-1 .marquee-content {
+        font-size: 6rem;
+        animation: scroll 35s linear infinite;
+    }
+    .marquee-2 .marquee-content {
+        font-size: 8rem;
+        animation: scroll 25s linear infinite reverse; /* 反向滚动 */
+    }
+    .marquee-3 .marquee-content {
+        font-size: 5rem;
+        animation: scroll 40s linear infinite;
+    }
+    
+    .marquee-inner {
+        display: flex;
+        width: fit-content;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 720px) {
+        .marquee-content { font-size: 4rem; }
+    }
+</style>
