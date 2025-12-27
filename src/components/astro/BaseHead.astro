@@ -59,7 +59,7 @@ const { title, description, image = FallbackImage } = Astro.props;
 <!-- Theme Initialization -->
 <script is:inline define:vars={{ themes }}>
 	(function () {
-		const saved = localStorage.getItem("hero-theme");
+		const saved = localStorage.getItem("theme");
 		const theme = themes.find((t) => t.id === saved) || themes[0];
 
 		if (theme) {
