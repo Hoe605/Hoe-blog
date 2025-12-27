@@ -56,10 +56,10 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 
-<!-- Theme Initialization -->
+<!-- 初始化主题 -->
 <script is:inline define:vars={{ themes }}>
 	(function () {
-		const saved = localStorage.getItem("hero-theme");
+		const saved = localStorage.getItem("theme");
 		const theme = themes.find((t) => t.id === saved) || themes[0];
 
 		if (theme) {

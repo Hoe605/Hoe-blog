@@ -1,6 +1,6 @@
 <template>
   <!-- 组件内部依然使用自己的变量，但同时也驱动全局 -->
-  <div class="hero-banner-container" :style="cssVars">
+  <div class="hero-banner-container">
     <div class="hero-banner-wrapper">
       
       <!-- 主题切换器组件 -->
@@ -50,11 +50,6 @@ import ThemeSwitcher from '#src/components/vue/ThemeSwitcher.vue';
 import { $currentTheme } from '#src/store/theme';
 
 const currentTheme = useStore($currentTheme);
-
-// 计算当前 CSS 变量
-const cssVars = computed(() => {
-  return currentTheme.value ? currentTheme.value.colors : {};
-});
 
 const rows = [
   { direction: 'left' }, { direction: 'right' }, { direction: 'left' },

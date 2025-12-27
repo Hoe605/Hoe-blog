@@ -28,14 +28,14 @@ export function setTheme(id: string) {
         root.style.setProperty(key, value);
       }
       
-      localStorage.setItem('hero-theme', id);
+      localStorage.setItem('theme', id);
     }
   }
 }
 
 // 初始化 store (在客户端运行)
 if (typeof window !== 'undefined') {
-  const saved = localStorage.getItem('hero-theme');
+  const saved = localStorage.getItem('theme');
   if (saved && themes.find(t => t.id === saved)) {
     setTheme(saved);
   } else {

@@ -32,19 +32,16 @@ const {
     opacity: 0; /* 初始隐藏 */
   }
 
-  /* 当 JS 添加 class 时改变大小 */
   #cursor-follower.is-hovering {
     width: var(--hoverSize);
     height: var(--hoverSize);
     background-color: rgba(255, 255, 255, 1);
   }
 
-  /* 只有当 body 被 hover 时（即鼠标在窗口内）才显示，配合 JS 使用 */
   :global(body:hover) #cursor-follower {
     opacity: 1;
   }
 
-  /* 移动端不显示 */
   @media (max-width: 720px) {
     #cursor-follower {
       display: none;
@@ -52,7 +49,6 @@ const {
   }
 </style>
 
-<!-- 全局样式：根据参数决定是否隐藏默认光标 -->
 {hideDefaultCursor && (
   <style is:global>
     @media (min-width: 721px) {
@@ -71,7 +67,6 @@ const {
 
 <script>
   const cursor = document.getElementById("cursor-follower");
-  // 自动查找所有常见的可交互元素
   const interactiveSelectors = "a, button, .post-card, .btn, input, textarea";
 
   let mouseX = -100;
@@ -80,13 +75,11 @@ const {
   let cursorY = -100;
   const speed = 0.2;
 
-  // 1. 鼠标移动追踪
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
   });
 
-  // 2. 动画循环
   function animate() {
     cursorX += (mouseX - cursorX) * speed;
     cursorY += (mouseY - cursorY) * speed;
@@ -100,11 +93,8 @@ const {
   }
   animate();
 
-  // 3. 交互悬停逻辑
-  // 使用事件委托，性能更好且支持动态添加的元素
   document.body.addEventListener("mouseover", (e) => {
     const target = e.target as HTMLElement;
-    // 检查目标元素或其父级是否是交互元素
     if (target.closest(interactiveSelectors)) {
       cursor?.classList.add("is-hovering");
     }
