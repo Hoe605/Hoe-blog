@@ -1,0 +1,73 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BlogPost from '#src/layouts/BlogPost.astro';
+import { render } from 'astro:content';
+import FormattedDate from '#src/components/astro/FormattedDate.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('til');
+	return posts.map((post) => {
+        const parts = post.id.split('/');
+        const category = parts[0];
+        const slug = parts.slice(1).join('/');
+        
+		return {
+			params: { category, slug },
+			props: post,
+		};
+	});
+}
+type Props = CollectionEntry<'til'>;
+
+const post = Astro.props;
+const { Content } = await render(post);
+const { category } = Astro.params;
+---
+
+<BlogPost title={post.data.title} description={post.data.description}>
+    <div class="til-header">
+        <a href={`/til/${category}`} class="back-link">← Back to {category}</a>
+        <div class="date">
+            <FormattedDate date={post.data.pubDate} />
+        </div>
+        <h1>{post.data.title}</h1>
+        {post.data.techStack && (
+            <div class="tags">
+                {post.data.techStack.map(t => <span class="tag">{t}</span>)}
+            </div>
+        )}
+        <hr />
+    </div>
+	<Content />
+</BlogPost>
+
+<style>
+    .til-header {
+        margin-bottom: 2rem;
+    }
+    .date {
+        color: var(--color-text-muted);
+        margin-bottom: 0.5rem;
+    }
+    .tags {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    .tag {
+        background: #333;
+        color: #eee;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+    .back-link {
+        display: block;
+        margin-bottom: 1rem;
+        color: var(--color-text-muted);
+        font-size: 0.9rem;
+    }
+    .back-link:hover {
+        color: var(--color-primary);
+    }
+</style>

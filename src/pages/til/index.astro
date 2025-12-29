@@ -1,5 +1,86 @@
 ---
-import Layout from "#src/layouts/BlogPost.astro";
+import BaseHead from '../../components/astro/BaseHead.astro';
+import Header from '../../components/astro/Header.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('til');
+
+// Extract categories from post IDs (e.g., "vue/reactivity" -> "vue")
+const categoryStats = posts.reduce((acc, post) => {
+  const category = post.id.split('/')[0];
+  if (!acc[category]) {
+    acc[category] = 0;
+  }
+  acc[category]++;
+  return acc;
+}, {} as Record<string, number>);
+
+const sortedCategories = Object.keys(categoryStats).sort();
 ---
 
-<Layout title="My TIL" description="Lorem ipsum dolor sit amet"> 111 </Layout>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`TIL - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.category-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				gap: 1.5rem;
+				margin-top: 2rem;
+			}
+			.category-card {
+				background-color: var(--color-bg-card);
+				border: 1px solid #333;
+				border-radius: 8px;
+				padding: 1.5rem;
+				transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+				text-decoration: none;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+                text-align: center;
+			}
+			.category-card:hover {
+				transform: translateY(-4px);
+				box-shadow: var(--glow-primary);
+				border-color: var(--color-primary);
+			}
+			.category-card h2 {
+				color: var(--color-primary);
+				margin-bottom: 0.5rem;
+                text-transform: capitalize;
+			}
+			.category-card p {
+				color: var(--color-text-muted);
+				font-size: 0.9rem;
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Today I Learned</h1>
+            <p>Snippets, notes, and discoveries.</p>
+			<section>
+				{sortedCategories.length > 0 ? (
+					<div class="category-grid">
+						{sortedCategories.map((category) => (
+							<a href={`/til/${category}`} class="category-card">
+								<h2>{category}</h2>
+								<p>{categoryStats[category]} {categoryStats[category] === 1 ? 'post' : 'posts'}</p>
+							</a>
+						))}
+					</div>
+				) : (
+					<p>No TIL posts found.</p>
+				)}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,103 @@
+---
+import BaseHead from '../../../components/astro/BaseHead.astro';
+import Header from '../../../components/astro/Header.astro';
+import Footer from '../../../components/astro/Footer.astro';
+import FormattedDate from '../../../components/astro/FormattedDate.astro';
+import { getCollection } from 'astro:content';
+
+import TimelineEntry from '../../../components/react/TimelineEntry';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('til');
+	const categories = [...new Set(posts.map((post) => post.id.split('/')[0]))];
+	
+	return categories.map((category) => ({
+		params: { category },
+	}));
+}
+
+const { category } = Astro.params;
+const posts = await getCollection('til');
+const categoryPosts = posts
+	.filter((post) => post.id.startsWith(`${category}/`))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const title = `TIL - ${category?.charAt(0).toUpperCase() + category?.slice(1)}`;
+
+// 随机分配左右位置 (构建时固定)
+const timelinePosts = categoryPosts.map((post, index) => {
+    const side = Math.random() > 0.5 ? 'left' : 'right';
+    return { ...post, side };
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={`TIL posts about ${category}`} />
+		<style>
+            /* Container for the timeline */
+            .timeline-container {
+                position: relative;
+                max-width: 1000px;
+                margin: 2rem auto;
+            }
+
+            /* The central vertical line */
+            .timeline-container::after {
+                content: '';
+                position: absolute;
+                width: 2px;
+                background-color: #333;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                margin-left: -1px;
+            }
+            
+            .back-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+                color: var(--color-text-muted);
+            }
+            .back-link:hover {
+                color: var(--color-primary);
+            }
+
+            /* Responsive: Adjust line position */
+            @media screen and (max-width: 600px) {
+                .timeline-container::after {
+                    left: 31px;
+                }
+            }
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+            <a href="/til" class="back-link">← Back to Categories</a>
+			
+            <h1 style="text-transform: capitalize;">{category}</h1>
+            
+            <div class="timeline-container">
+                {timelinePosts.map((post) => {
+                    const slugPart = post.id.split('/').slice(1).join('/');
+                    const url = `/til/${category}/${slugPart}`;
+                    
+                    return (
+                        <TimelineEntry 
+                            title={post.data.title}
+                            url={url}
+                            date={post.data.pubDate}
+                            description={post.data.description}
+                            side={post.side}
+                        />
+                    );
+                })}
+            </div>
+		</main>
+		<Footer />
+	</body>
+</html>
