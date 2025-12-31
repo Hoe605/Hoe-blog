@@ -10,9 +10,8 @@
 }
 
 :root {
-	/* Palette */
-	--color-bg: #F2F0E9;
-	--color-bg-card: #F2F0E9;
+	--color-bg: #050505;
+	--color-bg-card: #121212;
 	--color-text: #eeeeee;
 	--color-text-muted: #888888;
 	--color-primary: #ccff00; 
