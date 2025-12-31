@@ -1,0 +1,53 @@
+---
+import { SITE_TITLE } from '#src/consts.ts';
+
+const today = new Date();
+const formattedDate = today.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+---
+
+<header class="newspaper-header">
+    <h1 class="masthead">THE DAILY {SITE_TITLE.toUpperCase().split(' ').pop()}</h1>
+    <!-- 使用 split 稍微动态一点，或者直接写死 THE DAILY HOE -->
+</header>
+
+<div class="subhead-row">
+    <span>Vol. 1, No. 1</span>
+    <span>{formattedDate}</span>
+    <span>Price: FREE</span>
+    <span>Est. 2024</span>
+</div>
+
+<style>
+    /* Masthead */
+    header.newspaper-header {
+        text-align: center;
+        padding: 2rem 0 1rem;
+        border-bottom: 4px double var(--news-border);
+        margin-bottom: 0.5rem;
+    }
+
+    h1.masthead {
+        font-family: "Atkinson", sans-serif;
+        font-size: clamp(3rem, 10vw, 6rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1;
+        margin: 0;
+        letter-spacing: -2px;
+        color: var(--news-text);
+    }
+
+    .subhead-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--news-border);
+        padding: 0.5rem 0;
+        margin-bottom: 2rem;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: var(--news-accent);
+    }
+</style>

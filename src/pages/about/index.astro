@@ -1,11 +1,73 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '#src/layouts/BlogPost.astro';
+import BaseHead from '#src/components/astro/BaseHead.astro';
+import Header from '#src/components/astro/Header.astro';
+import Footer from '#src/components/astro/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '#src/consts.ts';
+
+// 引入报纸组件
+import Masthead from '#src/pages/about/newspaper/Masthead.astro';
+import SidebarLeft from '#src/pages/about/newspaper/SidebarLeft.astro';
+import MainArticle from '#src/pages/about/newspaper/MainArticle.astro';
+import SidebarRight from '#src/pages/about/newspaper/SidebarRight.astro';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
->
-111
-</Layout>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={`Extra! Extra! - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			:root {
+				--news-bg: var(--color-bg);
+				--news-text: var(--color-text);
+				--news-border: var(--color-border);
+				--news-accent: var(--color-primary);
+			}
+
+			body {
+				background-color: var(--news-bg);
+				color: var(--news-text);
+				font-family: "Times New Roman", Times, serif; /* Newspaper feel */
+			}
+
+			.newspaper-container {
+				max-width: 1200px;
+				margin: 2rem auto;
+				padding: 0 1rem;
+				background-color: var(--color-bg-card);
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);
+				padding-bottom: 2rem;
+			}
+
+			/* Grid Layout */
+			.news-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 2rem;
+			}
+
+			@media (min-width: 900px) {
+				.news-grid {
+					grid-template-columns: 250px 1fr 250px;
+					grid-template-areas: 
+						"sidebar-left main sidebar-right";
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		
+		<main class="newspaper-container">
+			<!-- 报头区域 -->
+			<Masthead />
+
+			<!-- 内容网格区域 -->
+			<div class="news-grid">
+				<SidebarLeft />
+				<MainArticle />
+				<SidebarRight />
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>

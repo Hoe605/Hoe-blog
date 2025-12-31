@@ -1,0 +1,102 @@
+<aside class="sidebar-left">
+    <article>
+        <h3>编者按</h3>
+        <p class="drop-cap">
+            欢迎来到 Hoe 的个人博客。这里不仅是代码的堆砌场，更是思想的试验田。作为一个全栈开发者，我致力于探索技术与艺术的边界。
+        </p>
+    </article>
+
+    <article>
+        <div class="weather-box">
+            <h4>今日灵感指数</h4>
+            <div class="weather-temp">98%</div>
+            <p>局部地区有代码雨</p>
+        </div>
+    </article>
+
+    <article>
+        <h3>技能雷达</h3>
+        <ul class="classifieds">
+            <li><strong>Frontend:</strong> React, Vue, Astro</li>
+            <li><strong>Backend:</strong> Node.js, Python</li>
+            <li><strong>DevOps:</strong> Docker, CI/CD</li>
+            <li><strong>Design:</strong> Figma, CSS Grid</li>
+        </ul>
+    </article>
+</aside>
+
+<style>
+    .sidebar-left {
+        grid-area: sidebar-left;
+    }
+
+    article {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--news-border);
+    }
+    
+    article:last-child {
+        border-bottom: none;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        border-bottom: 2px solid var(--news-accent);
+        padding-bottom: 0.2rem;
+        margin-bottom: 1rem;
+        color: var(--news-accent);
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        text-align: justify;
+    }
+
+    .drop-cap::first-letter {
+        float: left;
+        font-size: 3.5rem;
+        line-height: 0.8;
+        font-weight: bold;
+        margin-right: 0.5rem;
+        color: var(--news-accent);
+    }
+
+    /* Classifieds / List */
+    ul.classifieds {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    ul.classifieds li {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        border-bottom: 1px dotted var(--news-border);
+        padding-bottom: 0.2rem;
+    }
+    ul.classifieds strong {
+        text-transform: uppercase;
+        color: var(--news-accent);
+    }
+
+    /* Weather Widget */
+    .weather-box {
+        border: 2px solid var(--news-border);
+        padding: 1rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    h4 {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    .weather-temp {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--news-accent);
+    }
+</style>

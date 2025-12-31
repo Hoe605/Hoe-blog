@@ -1,0 +1,69 @@
+<aside class="sidebar-right">
+    <article>
+        <h3>分类广告 (联系方式)</h3>
+        <p><strong>急寻同好：</strong><br/>寻找志同道合的开发者共同探讨技术前沿。</p>
+        <ul class="classifieds">
+            <li><strong>Email:</strong> 1376929560@qq.com</li>
+            <li><strong>GitHub:</strong> Hoe605 </li>
+        </ul>
+    </article>
+
+    <article>
+        <h3>本期看点</h3>
+        <p>不要错过我们的最新博文！涵盖了 React Hooks 的深度解析以及 Vue 3 的实战技巧。</p>
+        <p>翻阅更多页面，发现更多精彩内容。</p>
+    </article>
+
+    <article>
+        <h3>订阅我们</h3>
+        <p>虽然这只是一份虚拟的报纸，但你可以通过 RSS 订阅我的博客，获取最新更新。</p>
+    </article>
+</aside>
+
+<style>
+    .sidebar-right {
+        grid-area: sidebar-right;
+    }
+
+    article {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--news-border);
+    }
+    
+    article:last-child {
+        border-bottom: none;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        border-bottom: 2px solid var(--news-accent);
+        padding-bottom: 0.2rem;
+        margin-bottom: 1rem;
+        color: var(--news-accent);
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    ul.classifieds {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    ul.classifieds li {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        border-bottom: 1px dotted var(--news-border);
+        padding-bottom: 0.2rem;
+    }
+    ul.classifieds strong {
+        text-transform: uppercase;
+        color: var(--news-accent);
+    }
+</style>
