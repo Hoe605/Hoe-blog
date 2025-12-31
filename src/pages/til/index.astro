@@ -33,7 +33,7 @@ const sortedCategories = Object.keys(categoryStats).sort();
 			}
 			.category-card {
 				background-color: var(--color-bg-card);
-				border: 1px solid #333;
+				border: 1px solid var(--color-border);
 				border-radius: 8px;
 				padding: 1.5rem;
 				transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
@@ -46,7 +46,7 @@ const sortedCategories = Object.keys(categoryStats).sort();
 			}
 			.category-card:hover {
 				transform: translateY(-4px);
-				box-shadow: var(--glow-primary);
+				box-shadow: var(--card-shadow-hover);
 				border-color: var(--color-primary);
 			}
 			.category-card h2 {
