@@ -92,7 +92,7 @@ const timelinePosts = categoryPosts.map((post, index) => {
                             url={url}
                             date={post.data.pubDate}
                             description={post.data.description}
-                            side={post.side}
+                            side={post.side as any}
                         />
                     );
                 })}
