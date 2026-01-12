@@ -13,6 +13,7 @@ const blogCollection = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: image().optional(),
+			tags: z.array(z.string()).optional(),
 		}),
 });
 
@@ -29,7 +30,7 @@ const tilCollection = defineCollection({
 	}),
 });
 
-export const collections = { 
-	blog : blogCollection,
+export const collections = {
+	blog: blogCollection,
 	til: tilCollection
 };

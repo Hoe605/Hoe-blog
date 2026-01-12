@@ -5,11 +5,18 @@ import Footer from "#src/components/astro/Footer.astro";
 import Header from "#src/components/astro/Header.astro";
 import HeroSection from "#src/pages/blog/_components/HeroSection.vue";
 import PostGrid from "#src/pages/blog/_components/PostGrid.vue";
+import Sidebar from "#src/components/vue/Sidebar.vue";
 import { SITE_DESCRIPTION, SITE_TITLE } from "#src/consts";
 
 const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const allTags = new Set();
+posts.forEach((post) => {
+	post.data.tags?.forEach((tag) => allTags.add(tag));
+});
+const tagsCount = allTags.size;
 
 // Map posts to a serializable format for Vue components
 const serializedPosts = posts.map((post) => ({
@@ -32,18 +39,47 @@ const otherPosts = serializedPosts.slice(1);
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 1060px;
+				width: 1200px;
 				max-width: calc(100% - 2rem);
 				margin: 0 auto;
 				padding: 2rem 0;
+			}
+			.layout-grid {
+				display: grid;
+				grid-template-columns: 1fr 320px;
+				gap: 2.5rem;
+				align-items: start;
+			}
+			@media (max-width: 960px) {
+				.layout-grid {
+					grid-template-columns: 1fr;
+				}
+				.sidebar-column {
+					order: -1; /* Sidebar on top on mobile? Or bottom? Usually bottom for content first, but user info might be nice up top? Let's leave at bottom for now or standard flow */
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			{featuredPost && <HeroSection post={featuredPost} client:load />}
-			<PostGrid posts={otherPosts} client:load />
+			<div class="layout-grid">
+				<div class="content-column">
+					{
+						featuredPost && (
+							<HeroSection post={featuredPost} client:load />
+						)
+					}
+					<PostGrid posts={otherPosts} client:load />
+				</div>
+				<div class="sidebar-column">
+					<Sidebar
+						postCount={posts.length}
+						tagCount={tagsCount}
+						client:load
+					/>
+				</div>
+			</div>
 		</main>
 		<Footer />
 	</body>
