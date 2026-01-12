@@ -20,7 +20,6 @@ defineProps<{
 
 <template>
 	<section>
-		<h3 class="grid-title">More Posts</h3>
 		<ul class="posts-grid">
 			<li v-for="post in posts" :key="post.id">
 				<PostCard :post="post" />
@@ -30,10 +29,6 @@ defineProps<{
 </template>
 
 <style scoped>
-.grid-title {
-	margin-bottom: 1.5rem;
-	font-size: 1.5rem;
-}
 .posts-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));

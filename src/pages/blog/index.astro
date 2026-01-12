@@ -63,13 +63,9 @@ const otherPosts = serializedPosts.slice(1);
 	<body>
 		<Header />
 		<main>
+			{featuredPost && <HeroSection post={featuredPost} client:load />}
 			<div class="layout-grid">
 				<div class="content-column">
-					{
-						featuredPost && (
-							<HeroSection post={featuredPost} client:load />
-						)
-					}
 					<PostGrid posts={otherPosts} client:load />
 				</div>
 				<div class="sidebar-column">
