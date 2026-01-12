@@ -1,4 +1,6 @@
-export const themes = [
+import type { Theme } from '#src/types/theme';
+
+export const themes: Theme[] = [
   {
     id: 'original',
     name: '赛博朋克 (Original)',
@@ -14,7 +16,7 @@ export const themes = [
     global: {
       '--color-bg': '#050505',
       '--color-text': '#eeeeee',
-      '--color-primary': '#ccff00', 
+      '--color-primary': '#ccff00',
       '--color-primary-dim': '#99bf00',
       '--color-bg-card': '#121212',
       '--color-border': '#333333',

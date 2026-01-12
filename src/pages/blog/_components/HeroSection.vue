@@ -23,6 +23,9 @@ defineProps<{
 		<a :href="`/blog/${post.id}/`" class="hero-card">
 			<div class="hero-image">
 				<img v-if="post.data.heroImage" :src="post.data.heroImage" alt="" loading="lazy" />
+				<div class="overlay">
+					<span class="read-more-overlay">Read Article &rarr;</span>
+				</div>
 			</div>
 			<div class="hero-content">
 				<span class="label">Latest Post / 最新推荐</span>
@@ -64,6 +67,35 @@ defineProps<{
 	height: 100%;
 	min-height: 400px;
 	overflow: hidden;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: color-mix(in srgb, var(--color-bg-card), transparent 25%);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: translateX(100%);
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	z-index: 2;
+}
+
+.hero-card:hover .overlay {
+	transform: translateX(0);
+}
+
+.read-more-overlay {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: var(--color-primary);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
 }
 
 .hero-image img {

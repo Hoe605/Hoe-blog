@@ -1,8 +1,6 @@
 import { atom } from 'nanostores';
 import { themes, defaultThemeId } from '#src/data/themes';
-
-// 导出类型以便使用
-export type Theme = typeof themes[0];
+import type { Theme } from '#src/types/theme';
 
 // 创建 store，初始值为空，将在 mount 时初始化
 export const $currentThemeId = atom<string>(defaultThemeId);
@@ -14,7 +12,7 @@ export function setTheme(id: string) {
   if (theme) {
     $currentThemeId.set(id);
     $currentTheme.set(theme);
-    
+
     // 应用全局 CSS 变量
     if (typeof document !== 'undefined') {
       const root = document.documentElement;
@@ -27,7 +25,7 @@ export function setTheme(id: string) {
       for (const [key, value] of Object.entries(theme.colors)) {
         root.style.setProperty(key, value);
       }
-      
+
       localStorage.setItem('theme', id);
     }
   }

@@ -22,14 +22,16 @@ defineProps<{
 	<a :href="`/blog/${post.id}/`" class="post-card">
 		<div class="image-container">
 			<img v-if="post.data.heroImage" :src="post.data.heroImage" alt="" loading="lazy" />
+			<div class="overlay">
+				<p v-if="post.data.description" class="description">
+					{{ post.data.description }}
+				</p>
+			</div>
 		</div>
 		<div class="content">
 			<h4 class="title">{{ post.data.title }}</h4>
 			<p class="date">
 				<FormattedDate :date="post.data.pubDate" />
-			</p>
-			<p v-if="post.data.description" class="description">
-				{{ post.data.description }}
 			</p>
 		</div>
 	</a>
@@ -55,10 +57,31 @@ defineProps<{
 }
 
 .image-container {
+	position: relative;
 	width: 100%;
 	aspect-ratio: 2 / 1;
 	overflow: hidden;
 	background-color: #000;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: color-mix(in srgb, var(--color-bg-card), transparent 15%);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	padding: 1.5rem;
+	display: flex;
+	align-items: center;
+	transform: translateY(100%);
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-card:hover .overlay {
+	transform: translateY(0);
 }
 
 .image-container img {
@@ -99,11 +122,11 @@ defineProps<{
 
 .description {
 	margin: 0;
-	color: var(--gray);
-	font-size: 1rem;
-	line-height: 1.5;
+	color: var(--color-text);
+	font-size: 0.95rem;
+	line-height: 1.6;
 	display: -webkit-box;
-	-webkit-line-clamp: 3;
+	-webkit-line-clamp: 5;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
