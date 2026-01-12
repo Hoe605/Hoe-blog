@@ -42,7 +42,7 @@ defineProps<{
 	height: 100%;
 	border-radius: 12px;
 	background-color: var(--color-bg-card);
-	border: 1px solid #333;
+	border: 1px solid var(--color-border);
 	overflow: hidden;
 	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	text-decoration: none;
@@ -50,7 +50,7 @@ defineProps<{
 
 .post-card:hover {
 	transform: translateY(-4px);
-	box-shadow: var(--glow-primary);
+	box-shadow: var(--card-shadow-hover);
 	border-color: var(--color-primary);
 }
 

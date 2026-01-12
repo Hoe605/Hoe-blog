@@ -63,7 +63,7 @@ const profile = {
     border-radius: 16px;
     padding: 2rem;
     text-align: center;
-    border: 1px solid #333;
+    border: 1px solid var(--color-border);
     transition: all 0.3s ease;
     position: sticky;
     top: 2rem;
@@ -71,7 +71,7 @@ const profile = {
 
 .profile-card:hover {
     border-color: var(--color-primary);
-    box-shadow: var(--glow-primary);
+    box-shadow: var(--card-shadow-hover);
     transform: translateY(-2px);
 }
 
@@ -114,8 +114,8 @@ const profile = {
     gap: 2rem;
     margin-bottom: 2rem;
     padding: 1rem 0;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .stat-item {
@@ -145,7 +145,7 @@ const profile = {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #222;
+    background: var(--color-bg);
     display: flex;
     align-items: center;
     justify-content: center;
