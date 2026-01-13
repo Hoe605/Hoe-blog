@@ -30,6 +30,8 @@ export interface ThemeGlobal {
     '--color-primary': string;
     /** 主题高亮色的暗色版本 (用于悬浮态或深层背景) */
     '--color-primary-dim': string;
+    /** 辅助强调色 (用于代码高亮、次级装饰) */
+    '--color-secondary': string;
     /** 卡片/容器背景色 */
     '--color-bg-card': string;
     /** 通用的分割线/边框颜色 */

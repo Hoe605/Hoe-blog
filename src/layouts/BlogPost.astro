@@ -45,7 +45,7 @@ allPosts.forEach((post) => {
 				top: 0;
 				left: 0;
 				z-index: 1;
-				filter: brightness(0.95); /* Lighter than before */
+				filter: brightness(0.9); /* Lighter than before */
 			}
 			.hero-overlay {
 				position: absolute;
@@ -55,8 +55,8 @@ allPosts.forEach((post) => {
 				z-index: 2;
 				background: linear-gradient(
 					to top,
-					var(--color-bg) 5%,
-					transparent 80%
+					var(--color-bg) 20%,
+					transparent 100%
 				);
 				padding: 4rem 2rem 6rem; /* Extra bottom padding for overlap */
 				display: flex;
@@ -66,6 +66,11 @@ allPosts.forEach((post) => {
 				width: 100%;
 				max-width: 900px;
 				text-align: center;
+			}
+			@media (max-width: 960px) {
+				.hero-content {
+					transform: none;
+				}
 			}
 			.hero-title {
 				font-size: 3.5rem;
@@ -84,11 +89,12 @@ allPosts.forEach((post) => {
 			}
 
 			.article-layout {
-				max-width: 1200px;
+				max-width: 1280px;
 				margin: -80px auto 4rem;
 				position: relative;
 				z-index: 10;
 				padding: 0 2rem;
+				padding-left: 6rem; /* Shift entire grid right */
 				display: grid;
 				grid-template-columns: 1fr 300px;
 				gap: 2rem;
@@ -157,7 +163,7 @@ allPosts.forEach((post) => {
 				border: 1px solid var(--color-border);
 			}
 			.prose :global(pre) {
-				background: #050505 !important;
+				background: var(--color-bg) !important;
 				border: 1px solid var(--color-border);
 				border-radius: 8px;
 				margin: 2rem 0;
@@ -173,7 +179,7 @@ allPosts.forEach((post) => {
 				.article-layout {
 					grid-template-columns: 1fr;
 					margin-top: -40px;
-					padding: 0 1rem;
+					padding: 0 1rem; /* Reset padding */
 				}
 				.sidebar-container {
 					display: none;

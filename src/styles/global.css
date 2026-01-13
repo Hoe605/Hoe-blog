@@ -14,19 +14,43 @@
 	--color-bg-card: #121212;
 	--color-text: #eeeeee;
 	--color-text-muted: #888888;
-	--color-primary: #ccff00; 
+	--color-primary: #ccff00;
 	--color-primary-dim: #99bf00;
-	--color-secondary: #00f0ff; 
-	
+	--color-secondary: #00f0ff;
+
 	--accent: var(--color-primary);
 	--accent-dark: var(--color-primary-dim);
-	--black: 255, 255, 255; 
+	--black: 255, 255, 255;
 	--gray: 136, 136, 136;
 	--gray-light: 30, 30, 30;
 	--gray-dark: 200, 200, 200;
-	
+
 	--box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 	--glow-primary: 0 0 10px rgba(204, 255, 0, 0.3), 0 0 20px rgba(204, 255, 0, 0.1);
+
+	/* Shiki / Astro Code Themes - Adjusted for better HTML/JS readability */
+	--astro-code-color-text: var(--color-text);
+	--astro-code-color-background: var(--color-bg);
+	--astro-code-token-constant: var(--color-secondary);
+	--astro-code-token-string: var(--color-primary-dim);
+	--astro-code-token-comment: var(--color-text-muted);
+	--astro-code-token-keyword: var(--color-primary);
+	--astro-code-token-parameter: var(--color-text);
+	--astro-code-token-function: var(--color-secondary);
+	--astro-code-token-string-expression: var(--color-primary-dim);
+	--astro-code-token-punctuation: var(--color-text-muted);
+	--astro-code-token-link: var(--color-primary-dim);
+
+	/* Refined mappings */
+	--shiki-color-text: var(--color-text);
+	--shiki-color-background: var(--color-bg);
+	--shiki-token-constant: var(--color-secondary);
+	--shiki-token-string: var(--color-primary-dim);
+	--shiki-token-comment: var(--color-text-muted);
+	--shiki-token-keyword: var(--color-primary);
+	--shiki-token-parameter: var(--color-text);
+	--shiki-token-function: var(--color-secondary);
+	--shiki-token-punctuation: var(--color-text-muted);
 }
 
 @font-face {
@@ -36,6 +60,7 @@
 	font-style: normal;
 	font-display: swap;
 }
+
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-bold.woff") format("woff");
@@ -61,19 +86,39 @@ main {
 	margin: auto;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	margin: 0 0 0.5rem 0;
 	color: var(--color-primary);
 	line-height: 1.2;
 }
 
-h1 { font-size: 3.052em; }
-h2 { font-size: 2.441em; }
-h3 { font-size: 1.953em; }
-h4 { font-size: 1.563em; }
-h5 { font-size: 1.25em; }
+h1 {
+	font-size: 3.052em;
+}
 
-strong, b {
+h2 {
+	font-size: 2.441em;
+}
+
+h3 {
+	font-size: 1.953em;
+}
+
+h4 {
+	font-size: 1.563em;
+}
+
+h5 {
+	font-size: 1.25em;
+}
+
+strong,
+b {
 	font-weight: 700;
 	color: var(--color-text);
 }
@@ -99,7 +144,8 @@ p {
 	color: var(--color-text);
 }
 
-textarea, input {
+textarea,
+input {
 	width: 100%;
 	font-size: 16px;
 	background: var(--color-bg-card);
@@ -130,7 +176,8 @@ pre {
 	background-color: #111;
 	border: 1px solid #333;
 }
-pre > code {
+
+pre>code {
 	all: unset;
 	color: #ccc;
 }

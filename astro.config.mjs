@@ -12,6 +12,11 @@ import vue from '@astrojs/vue';
 export default defineConfig({
     site: 'https://example.com',
     integrations: [mdx(), sitemap(), vue(), react()],
+    markdown: {
+        shikiConfig: {
+            theme: 'css-variables',
+        },
+    },
     vite: {
         resolve: {
             alias: [
